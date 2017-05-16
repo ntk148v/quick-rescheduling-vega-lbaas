@@ -79,7 +79,7 @@ def reschedule_loadbalancer(loadbalancer_id):
         }
         print 'Waiting for 5 seconds...'
         time.sleep(5)  # delays for 5 seconds
-        if prev_host != new_host:
+        if prev_agent_data['host'] != new_agent_data['host']:
             remove_unused_loadbalancer(loadbalancer_id, prev_agent_data['host'])
         else:
             print 'Same host.'
