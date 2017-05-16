@@ -42,7 +42,7 @@ def remove_unused_loadbalancer(loadbalancer_id, prev_host):
     remove_port_cmd = 'ip netns del qlbaas-' + loadbalancer_id
     # Remove port qlbaas-<loadbalancer_id>
     q_and_a(remove_port_cmd, prev_host)
-    remove_haproxy_config_dir = 'rm -rf /var/lib/neutron_lbaas/haproxy/' + \
+    remove_haproxy_config_dir = 'rm -rf /var/lib/neutron/lbaas/v2/' + \
                                 loadbalancer_id
     # Remove haproxy config dir
     q_and_a(remove_haproxy_config_dir, prev_host)
