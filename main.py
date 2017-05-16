@@ -49,7 +49,7 @@ def remove_unused_loadbalancer(loadbalancer_id, prev_host):
     kill_haproxy_process = 'ps -ef | grep ' + loadbalancer_id + '\
                  | grep -v grep | awk \'{print $2}\' | xargs kill -9'
     # Kill haproxy process
-    q_and_a(kill_haproxy_process)
+    q_and_a(kill_haproxy_process, prev_host)
 
 
 def reschedule_loadbalancer(loadbalancer_id):
@@ -77,9 +77,12 @@ def reschedule_loadbalancer(loadbalancer_id):
             'prev_host': prev_agent_data['host'],
             'new_host': new_agent_data['host'],
         }
-
+        print 'Waiting for 5 seconds...'
         time.sleep(5)  # delays for 5 seconds
-        remove_unused_loadbalancer(loadbalancer_id, prev_agent_data['host'])
+        if prev_host != new_host:
+            remove_unused_loadbalancer(loadbalancer_id, prev_agent_data['host'])
+        else:
+            print 'Same host.'
     except Exception as e:
         print 'ERROR: %s' % str(e)
 
